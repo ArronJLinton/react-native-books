@@ -40,7 +40,7 @@ export const SavedBookCard = ({ data, navigate }) => {
       <View style={{ borderBottomColor: 'lightgray', borderBottomWidth: 1 }}>
         <CardItem cardBody>
           <TouchableOpacity
-            onPress={() => navigate('BookNotes')}
+            onPress={() => navigate('BookNotes', { data })}
           >
             <Image source={{uri: bookCover }} resizeMode='center' style={{width: 100, height: 150}}/> 
           </TouchableOpacity>
