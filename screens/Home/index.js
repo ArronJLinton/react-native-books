@@ -14,10 +14,9 @@ const Home = ({ navigation, global }) => {
   });
 
   const handleBookSearch = () => {  
-    setBookState({ ...bookState, isLoading: true})
+    setBookState({ ...bookState, results: [], isLoading: true})
     axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookState.search}`)
       .then(results => {
-        console.log('BOOKS: ', results.data.items)
         setBookState({...bookState, results: results.data.items, isLoading: false})
       })
       .catch(err => console.log(err))

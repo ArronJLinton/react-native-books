@@ -20,6 +20,9 @@ const BookStackScreen = () => (
     <BookStack.Screen
       name="Book Detail"
       component={BookDetail}
+      // options={{
+      //   headerShown: false,
+      // }}
     />
   </BookStack.Navigator>
 );
@@ -52,7 +55,6 @@ export default function BottomTabNavigator({ navigation, route }) {
       <BottomTab.Screen
         name="Home"
         component={BookStackScreen}
-        
         options={{
           title: 'Book Search',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-search" />,

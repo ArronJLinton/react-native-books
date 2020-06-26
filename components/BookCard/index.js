@@ -5,15 +5,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const BookCard = ({ data, navigation, saveBook }) => {
   const { title, authors, imageLinks, ratingsCount, averageRating } = data;
-  console.log('RATINGS: ', data)
   const stars = [1, 2, 3, 4, 5];
     return (
       <Card>
         <CardItem>
           <Left>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Book Detail', { data })}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate('Book Detail', { data })}>
               <Image source={{uri: imageLinks ? imageLinks.thumbnail: ''}} resizeMode='center' style={{width: 100, height: 150}} />
             </TouchableOpacity>
             <Body>
@@ -25,9 +22,8 @@ export const BookCard = ({ data, navigation, saveBook }) => {
         <CardItem cardBody>
           <Left >
             <Text>{ratingsCount || 0} Ratings</Text>
-            {/* <View > */}
             <Body style={{flexDirection: 'row'}}>
-            {stars.map(star =>  <Icon type='FontAwesome' name={star <= averageRating ? 'star' : 'star-o'} style={{ fontSize: 25, color: 'orange'}}/>)}  
+            {stars.map((star, i) =>  <Icon key={i} type='FontAwesome' name={star <= averageRating ? 'star' : 'star-o'} style={{ fontSize: 25, color: 'orange'}}/>)}  
             </Body>
           </Left>
           <TouchableOpacity onPress={() => saveBook(data)}>
