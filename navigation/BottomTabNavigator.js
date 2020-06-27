@@ -6,6 +6,7 @@ import HomeScreen from '../screens/Home';
 import SavedBooksScreen from '../screens/SavedBooks';
 import BookDetail from '../screens/BookDetail';
 import BookNotesScreen from '../screens/BookNotes';
+import BookPreviewScreen from '../screens/BookPreview';
 
 const BookStack = createStackNavigator();
 const BookStackScreen = () => (
@@ -23,6 +24,13 @@ const BookStackScreen = () => (
       // options={{
       //   headerShown: false,
       // }}
+    />
+    <BookStack.Screen
+      name='Book Preview'
+      component={BookPreviewScreen}
+      options={{
+        headerShown: false,
+      }}
     />
   </BookStack.Navigator>
 );

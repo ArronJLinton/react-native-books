@@ -2,16 +2,16 @@ import React from 'react';
 import { Image, Linking, View, ScrollView} from 'react-native';
 import { Container, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
 
-const BookDetail = ({ route }) => {
-  const { title, authors, imageLinks, previewLink, description } = route.params.data;
-  
+const BookDetail = ({ route, navigation }) => {
+  const { title, authors, imageLinks, previewLink, description } = route.params.data.volumeInfo;
+  const { webReaderLink } = route.params.data.accessInfo;
     return (
       <Container>
         <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center'}}>
           {/* <Content> */}
             {/* <Card style={{flex: 0}}> */}
               <CardItem style={{backgroundColor: 'lightgray', width: '100%', justifyContent: 'center'}}>
-                <Image source={{uri: imageLinks.smallThumbnail}} resizeMode='contain' style={{height: 300, width: 200}}/> 
+                <Image source={{uri: imageLinks.thumbnail}} resizeMode='contain' style={{height: 300, width: 200}}/> 
              
               </CardItem>
               <CardItem>
@@ -42,7 +42,9 @@ const BookDetail = ({ route }) => {
                   <Button transparent textStyle={{color: '#87838B'}}>
                     <Text 
                       style={{color: 'blue'}}
-                      onPress={() => Linking.openURL(previewLink)}>
+                      onPress={() => navigation.navigate('Book Preview', { webReaderLink })}
+                      // onPress={() =>  Linking.openURL(webReaderLink)}
+                      >
                     Preview
                     </Text>
                   </Button>
