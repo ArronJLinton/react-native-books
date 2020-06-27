@@ -4,7 +4,7 @@ import { Card, CardItem, Thumbnail, Text, Icon, Left, Body, Right } from 'native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const BookCard = ({ data, navigation, saveBook }) => {
-  const { title, authors, imageLinks, ratingsCount, averageRating } = data;
+  const { title, authors, imageLinks, ratingsCount, averageRating } = data.volumeInfo;
   const stars = [1, 2, 3, 4, 5];
     return (
       <Card>

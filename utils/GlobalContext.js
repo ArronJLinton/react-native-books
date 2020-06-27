@@ -6,11 +6,12 @@ const GlobalContext = createContext({});
 export const GlobalContextProvider = (props) => {
   const [books, setBooks] = useState([]);
   const saveBook = (data) => {
-  const { title, authors, imageLinks } = data;
+  const { title, authors, imageLinks } = data.volumeInfo;
   const bookObject = {
       title,
       fullName: authors[0],
-      bookCover: imageLinks.thumbnail
+      bookCover: imageLinks.thumbnail,
+      googleId: data.id
     }
     API.saveBook(bookObject)
     .then(() => getBooks())

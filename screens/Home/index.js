@@ -54,7 +54,7 @@ const Home = ({ navigation, global }) => {
               <BookCard 
                 key={i}
                 navigation={navigation} 
-                data={book.volumeInfo} 
+                data={book} 
                 saveBook={global.saveBook} 
                 />
               )}

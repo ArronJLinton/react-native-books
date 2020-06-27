@@ -1,17 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Container, Body, CardItem, Icon, Button, Header, Content, Tab, Tabs  } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import axios from 'axios';
 import { withGlobalContext } from '../../utils/GlobalContext';
 import { SavedBookCard } from '../../components/BookCard';
+import API from '../../utils/API';
 
  const BookNotes = ({ global, route }) => {
   // const { books } = global;
-  const { title, Author, bookCover } = route.params.data;
+  const { title, Author, bookCover, googleId } = route.params.data;
+  const [book, setBook] = useState({});
 
+  const findBookId = () => {
+    API.findById(googleId)
+      .then(({data}) => {
+        console.log('DATA: ', data.webReaderLink)
+        setBook(data.volumeInfo)
+      })
+      .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    findBookId();
+  }, [])
   return (
     <Container>
-      <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center'}}>
+      {/* <ScrollView contentContainerStyle={{ justifyContent: 'center', alignItems: 'center'}}> */}
         {/* <Content> */}
           {/* <Card style={{flex: 0}}> */}
             <CardItem style={{backgroundColor: 'lightgray', width: '100%', justifyContent: 'center'}}>
@@ -31,12 +46,24 @@ import { SavedBookCard } from '../../components/BookCard';
           </Tab>
           <Tab heading="Description">
             {/* <Tab2 /> */}
+            <Content>
+              <Text>{book.description}</Text>
+            </Content>
           </Tab>
           <Tab heading="BookDetail">
-            {/* <Tab3 /> */}
+            <Content>
+              <Text>{book.title}</Text>
+              
+              <Text>{book.authors[0]}</Text>
+              {/* <Text>{book.description}</Text>
+              <Text>{book.description}</Text> */}
+              <Text>{book.subtitle}</Text>
+              <Text>Pages: {book.pageCount}</Text>
+              <Text>{book.categories[0]}</Text>
+            </Content>
           </Tab>
         </Tabs>
-      </ScrollView>
+      {/* </ScrollView> */}
     </Container>
   );
 }
