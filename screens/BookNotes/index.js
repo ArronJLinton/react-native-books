@@ -9,8 +9,8 @@ import API from '../../utils/API';
   // const { books } = global;
   const { title, Author, bookCover, googleId } = route.params.data;
   const [book, setBook] = useState({});
-  const H_MAX_HEIGHT = 150;
-  const H_MIN_HEIGHT = 52;
+  const H_MAX_HEIGHT = 200;
+  const H_MIN_HEIGHT = 0;
   const H_SCROLL_DISTANCE = H_MAX_HEIGHT - H_MIN_HEIGHT;
   const scrollOffsetY = useRef(new Animated.Value(0)).current;
   const headerScrollHeight = scrollOffsetY.interpolate({
@@ -32,38 +32,37 @@ import API from '../../utils/API';
   }, [])
   return (
     <View style={styles.container}> 
-
-        <Tabs style={{ paddingTop: H_MAX_HEIGHT }}>
-          <Tab heading="Chapter Notes">
-          <ScrollView
-            onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: scrollOffsetY } } }
-            ])}
-            scrollEventThrottle={16}
-          >
-            <AccordionExample />
-            </ScrollView>
-          </Tab>
-          <Tab heading="Description">            
-          <ScrollView
-            onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: scrollOffsetY } } }
-            ])}
-            scrollEventThrottle={16}
-          >
+      <ScrollView
+        onScroll={Animated.event([
+          { nativeEvent: { contentOffset: { y: scrollOffsetY } } }
+        ])}
+        scrollEventThrottle={16}
+        >
+        <View style={{paddingTop: H_MAX_HEIGHT}}>
+          <Tabs>
+            <Tab heading="Chapter Notes">
+              <View style={{ flex: 1, height: '100%'}}>
+                <AccordionExample />
+              </View>
+            </Tab>
+            <Tab heading="Description">             
+              <View style={{ flex: 1, padding: 20}}>
                 <HTML html={book.description} imagesMaxWidth={Dimensions.get('window').width} />
-            </ScrollView>
-          </Tab>
-          <Tab heading="Book Detail">
-            <Content>
-              <Text>{title}</Text>
-              <Text>{Author.fullName}</Text>
-              <Text>{book.subtitle}</Text>
-              <Text>Pages: {book.pageCount}</Text>
-              {/* <Text>{book.categories[0]}</Text> */}
-            </Content>
-          </Tab>
-        </Tabs>
+              </View>
+            </Tab>
+            <Tab heading="Book Detail">
+              <View style={{flex: 1, height: '100%'}}>
+                <Text>{title}</Text>
+                <Text>{Author.fullName}</Text>
+                <Text>{book.subtitle}</Text>
+                <Text>Pages: {book.pageCount}</Text>
+                <Text>{book.categories ? book.categories[0] : null}</Text>
+              </View>
+            </Tab>
+          </Tabs>
+        </View>
+      </ScrollView>
+
       <Animated.View
         style={{
           position: "absolute",
@@ -78,7 +77,7 @@ import API from '../../utils/API';
           borderBottomColor: "#EFEFF4",
           borderBottomWidth: 2,
           padding: 10,
-          backgroundColor: "lightgray"
+          backgroundColor: "lightgray",
         }}
         >
         <Image source={{uri: bookCover}} resizeMode='contain' style={{flex: 1}}/> 
@@ -92,8 +91,8 @@ export default withGlobalContext(BookNotes);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    // justifyContent: 'center',
+    // alignItems: 'center'
   }
 });
 
@@ -105,10 +104,6 @@ const dataArray = [
 ];
 const AccordionExample = () => {
     return (
-      <Container>
-        <Content padder>
-          <Accordion dataArray={dataArray} expanded={0}/>
-        </Content>
-      </Container>
+      <Accordion dataArray={dataArray} expanded={0}/>
     );
   }
